@@ -6,7 +6,7 @@ import { HandThumbDownIcon, HandThumbUpIcon, HeartIcon, DocumentMagnifyingGlassI
 import { ShoppingBagIcon } from '@heroicons/react/20/solid'
 
 function page() {
-  const [tab, setTab] = React.useState(0)
+  const [tab, setTab] = React.useState(null)
   const handleSelectTab = (index) => {
     setTab(index)
   }
