@@ -12,6 +12,7 @@ import {
   MagnifyingGlassCircleIcon,
   HandThumbUpIcon,
   HandThumbDownIcon,
+  CurrencyRupeeIcon,
   EyeIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
@@ -38,6 +39,7 @@ const videos = [
     likes: "6k",
     dislikes: "291",
     views: "1.2M",
+    price:"2k $"
   },
   {
     title: "The Batman",
@@ -46,6 +48,7 @@ const videos = [
     likes: "6k",
     dislikes: "291",
     views: "1.2M",
+    price:"2k $"
   },
   {
     title: "Breaking Bad",
@@ -54,6 +57,7 @@ const videos = [
     likes: "1.2k",
     dislikes: "65",
     views: "350K",
+    price:"2k $"
   },
   {
     title: "Peaky Blinders",
@@ -62,6 +66,7 @@ const videos = [
     likes: "6k",
     dislikes: "291",
     views: "1.2M",
+    price:"2k $"
   },
 ]
 function classNames(...classes) {
@@ -118,7 +123,7 @@ export default function Page() {
           videos.map((video) => (
             <Link href='/video'>
               <div className='col-span-1 px-8 py-8 border-solid rounded-lg  shadow-innerr shadow-2xl min-w-full hover:scale-105
-            transition ease-in-out delay-150 hover:cursor-pointer'>
+            transition ease-in-out hover:cursor-pointer'>
                 <div className="
               flex
               iems-center
@@ -131,7 +136,7 @@ export default function Page() {
                   <h3 className="mt-5 text-lg leading-6 font-small text-gray-900">
                     {video.title}
                   </h3>
-                  <p className='text-gray-600 mt-2'>{video.description}</p>
+                  <p className='text-gray-600 mt-2'>{video.description.length>65 ? video.description.slice(0,65)+'...':video.description}</p>
                   <div className='
               flex items-center align-center rounded-2xl py-2 px-2 border-solid border-0 mt-4'>
                     <HandThumbUpIcon
@@ -140,6 +145,7 @@ export default function Page() {
                     <HandThumbDownIcon
                       className='h-6 w-6 text-gray-600 group-hover:text-indigo-600' />
                     <p className='text-gray-600 mx-2'>{video.dislikes}</p>
+                    {/* <p className='text-gray-600 mx-2'></p> */}
                     <p className='text-gray-600 ml-auto'>
                       {video.views} views
                       {/* <EyeIcon className='h-6 w-6' /> */}

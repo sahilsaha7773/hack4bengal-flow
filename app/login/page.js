@@ -27,13 +27,13 @@ export default function Login() {
           alt="" />
 
         </div>
-        <div className="flex justify-center text-lg font-semibold text-gray-800 p-2"><h1>Flow Tube</h1></div>
+        <div className="flex justify-center text-2xl font-semibold text-gray-800 p-2"><h1>Flow Tube</h1></div>
 
         <form className="mt-6">
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-semibold text-gray-800"
+              className="block text-md font-semibold text-gray-800"
             >
               Email
             </label>
@@ -45,7 +45,7 @@ export default function Login() {
           <div className="mb-2">
             <label
               htmlFor="password"
-              className="block text-sm font-semibold text-gray-800"
+              className="block text-md font-semibold text-gray-800"
             >
               Password
             </label>
@@ -61,8 +61,8 @@ export default function Login() {
             Forget Password?
           </Link>
           <div className="mt-2 flex justify-center">
-            <button className="w-4/6 px-4 py-2 tracking-wide text-white    hover:bg-green-500
-              hover:text-white   hover:scale-[1.01]
+            <button className="w-4/6 px-4 py-2 tracking-wide text-white font-bold    hover:bg-green-600
+              hover:text-white
               transition-all  duration-300 transform bg-green-400 rounded-md  focus:outline-none focus:bg-green-500">
               Sign In
             </button>
