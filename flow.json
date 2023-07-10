@@ -1,23 +1,30 @@
 {
 	"contracts": {
-		"UserProfile": "./flow/cadence/contracts/UserProfile.cdc",
-		"NonFungibleToken": "./flow/cadence/contracts/standards/NonFungibleToken.cdc",
-		"FlowVideo": "./flow/cadence/contracts/FlowVideo.cdc",
-		"MetadataViews": "./flow/cadence/contracts/MetadataViews.cdc",
-		"FungibleToken": {
-			"source": "./flow/cadence/contracts/standards/FungibleToken.cdc",
-			"aliases": {
-				"emulator": "0xee82856bf20e2aa6",
-				"testnet": "0x9a0766d93b6608b7"
-			}
-		},
 		"FlowToken": {
 			"source": "./flow/cadence/contracts/FlowToken.cdc",
 			"aliases": {
-				"emulator": "0x0ae53cb6e3f42a79",
-				"testnet": "0x7e60df042a9c0868"
+				"emulator": "0ae53cb6e3f42a79",
+				"testnet": "7e60df042a9c0868"
 			}
-		}
+		},
+		"FlowVideo": "./flow/cadence/contracts/FlowVideo.cdc",
+		"FungibleToken": {
+			"source": "./flow/cadence/contracts/standards/FungibleToken.cdc",
+			"aliases": {
+				"emulator": "ee82856bf20e2aa6",
+				"testnet": "9a0766d93b6608b7"
+			}
+		},
+		"HybridCustody": {
+			"source": "./flow/cadence/contracts/hybrid-custody/HybridCustody.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "96b15ff6dfde11fe"
+			}
+		},
+		"MetadataViews": "./flow/cadence/contracts/MetadataViews.cdc",
+		"NonFungibleToken": "./flow/cadence/contracts/standards/NonFungibleToken.cdc",
+		"UserProfile": "./flow/cadence/contracts/UserProfile.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -26,6 +33,10 @@
 		"testnet": "access.devnet.nodes.onflow.org:9000"
 	},
 	"accounts": {
+		"B": {
+			"address": "f669cb8d41ce0c74",
+			"key": "a664ff77eb72f77da2906ef747b54365d4c493b1324fe8427f21b3dd381a6989"
+		},
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",
 			"key": "b246c5f8bd886942461e23b8791e62e76a50341d0ada9c43392a920cfa2440c8"

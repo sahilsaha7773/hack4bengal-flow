@@ -12,7 +12,9 @@ import {
   MagnifyingGlassCircleIcon,
   HandThumbUpIcon,
   HandThumbDownIcon,
-  EyeIcon
+  EyeIcon,
+  CubeTransparentIcon,
+  CubeIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Navbar from '../components/Navbar'
@@ -41,10 +43,10 @@ const videos = [
     title: "The Batman",
     thumbnail: "https://images3.alphacoders.com/129/1297317.jpg",
     description: "When that light hits the sky, it's not just a call- it's a warning. To them. Fear is a tool...",
-    likes: "1",
+    likes: "0",
     dislikes: "0",
-    views: "19",
-    price: "128.00"
+    views: "0",
+    price: "100.00"
   },
   {
     title: "Peaky Blinders",
@@ -143,56 +145,60 @@ export default function Page() {
       </div>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mx-12 my-10 gap-6'>
         {
-          nftVideos.map((video, ind) => (
-            <Link href={{
-              pathname: "video",
-              query: {
-                id: video.id,
-                title: video.title,
-                description: video.description,
-                videoCID: video.videoCID,
-                owner: video.owner,
-                price: videos[ind].price,
-                likes: videos[ind].likes,
-                dislikes: videos[ind].dislikes,
-                views: videos[ind].views,
-              }
-            }}>
-              <div className='col-span-1 px-8 py-8 border-solid rounded-lg  shadow-innerr shadow-2xl min-w-full hover:scale-105
+          nftVideos.length == 0 ? <div className="text-center text-2xl font-semibold">
+            <CubeIcon className='text-green-400 w-14 h-14 ml-24 mb-5' />
+            No Videos Available
+          </div> :
+            nftVideos.map((video, ind) => (
+              <Link href={{
+                pathname: "video",
+                query: {
+                  id: video.id,
+                  title: video.title,
+                  description: video.description,
+                  videoCID: video.videoCID,
+                  owner: video.owner,
+                  price: videos[ind].price,
+                  likes: videos[ind].likes,
+                  dislikes: videos[ind].dislikes,
+                  views: videos[ind].views,
+                }
+              }}>
+                <div className='col-span-1 px-8 py-8 border-solid rounded-lg  shadow-innerr shadow-2xl min-w-full hover:scale-105
             transition ease-in-out delay-150 hover:cursor-pointer'>
-                <div className="
+                  <div className="
               flex
               iems-center
               justify-between
               flex-col
             ">
-                  <img className="w-full h-60 object-cover rounded-lg shadow-inner"
-                    src={videos[ind].thumbnail}
-                    alt="" />
-                  <h3 className="mt-5 text-lg leading-6 font-small text-gray-900">
-                    {video.title}
-                  </h3>
-                  <p className='text-gray-600 mt-2'>{video.description.substr(0, 200) + "..."}</p>
-                  <div className='
+                    <img className="w-full h-60 object-cover rounded-lg shadow-inner"
+                      src={videos[ind].thumbnail}
+                      alt="" />
+                    <h3 className="mt-5 text-lg leading-6 font-small text-gray-900">
+                      {video.title}
+                    </h3>
+                    <p className='text-gray-600 mt-2'>{video.description.substr(0, 200) + "..."}</p>
+                    <div className='
               flex items-center align-center rounded-2xl py-2 px-2 border-solid border-0 mt-4'>
-                    <HandThumbUpIcon
-                      className='h-6 w-6 text-gray-600 group-hover:text-indigo-600' />
-                    <p className='text-gray-600 mx-2'>{videos[ind].likes}</p>
-                    <HandThumbDownIcon
-                      className='h-6 w-6 text-gray-600 group-hover:text-indigo-600' />
-                    <p className='text-gray-600 mx-2'>{videos[ind].dislikes}</p>
-                    <p className='text-gray-600 ml-auto'>
-                      {videos[ind].views} views
-                      {/* <EyeIcon className='h-6 w-6' /> */}
-                    </p>
+                      <HandThumbUpIcon
+                        className='h-6 w-6 text-gray-600 group-hover:text-indigo-600' />
+                      <p className='text-gray-600 mx-2'>{videos[ind].likes}</p>
+                      <HandThumbDownIcon
+                        className='h-6 w-6 text-gray-600 group-hover:text-indigo-600' />
+                      <p className='text-gray-600 mx-2'>{videos[ind].dislikes}</p>
+                      <p className='text-gray-600 ml-auto'>
+                        {videos[ind].views} views
+                        {/* <EyeIcon className='h-6 w-6' /> */}
+                      </p>
+                    </div>
+
                   </div>
-
                 </div>
-              </div>
-            </Link>
+              </Link>
 
 
-          ))
+            ))
         }
 
       </div>

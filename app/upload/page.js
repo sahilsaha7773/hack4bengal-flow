@@ -8,6 +8,8 @@ import * as t from "@onflow/types"
 import "../../flow/config.js";
 import { createVideoNFT } from '@/flow/cadence/transactions/js/CreateVideoNFT';
 import { PaintBrushIcon } from '@heroicons/react/24/outline';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function page() {
   const [title, setTitle] = useState('')
@@ -30,9 +32,9 @@ export default function page() {
         fcl.arg(user.addr, t.Address),
         fcl.arg(title, t.String),
         fcl.arg(description, t.String),
-        // the batman fcl.arg("bafybeie6ahuwg7al2l5att7e6ajphqhiqcspzdy3koailsvg6jpifnrype", t.String),
+        fcl.arg("bafybeie6ahuwg7al2l5att7e6ajphqhiqcspzdy3koailsvg6jpifnrype", t.String),
         // fcl.arg("bafybeigwtvjce3kbr35uwf7ti4ylkrgjxwpcv7f3apfnem4kr2ufnnu5ei", t.String)
-        fcl.arg("bafybeid3wquuygelr5svb47r7kpsyhigsizmiafxtoaqmsahs5igbp567i", t.String)
+        // fcl.arg("bafybeid3wquuygelr5svb47r7kpsyhigsizmiafxtoaqmsahs5igbp567i", t.String)
       ]),
       fcl.payer(fcl.currentUser),
       fcl.proposer(fcl.currentUser),
@@ -40,7 +42,9 @@ export default function page() {
       fcl.limit(9999),
     ]).then(fcl.decode)
 
-    console.log(transactionId)
+    const txStatus = await fcl.tx(transactionId).onceSealed();
+    console.log('TxStatus', txStatus);
+    toast.success('Successfully Uploaded "' + title + '"')
   }
   return (
     <div>
@@ -56,10 +60,12 @@ export default function page() {
                 <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                 </svg>
+                {video ? <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">{video}</p> : null}
                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">MP4, wav, etc. (Video files only)</p>
               </div>
-              <input id="dropzone-file" type="file" class="hidden" />
+              <input accept="video/mp4,video/x-m4v,video/*"
+                id="dropzone-file" type="file" class="hidden" value={video} onChange={(e) => setVideo(e.target.value)} />
             </label>
           </div>
 
@@ -103,6 +109,7 @@ export default function page() {
           <PaintBrushIcon className="h-6 w-6 mr-2" />
           Generate Using AI </button>
       </div>
+      <ToastContainer />
     </div>
   )
 }

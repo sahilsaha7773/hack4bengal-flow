@@ -12,9 +12,9 @@ transaction(
   prepare(acct: AuthAccount) {
     // let nftMinter = acct.borrow<&FlowVideo.NFTMinter>(from: /storage/Minter)
     //   ?? panic("Could not borrow a reference to the NFTMinter")
-    // acct.save(<- FlowVideo.createEmptyCollection(), to: /storage/Collection) // Save the collection to the account's storage
-    // acct.link<&FlowVideo.Collection{FlowVideo.MyCollectionPublic}>(/public/Collection, target: /storage/Collection) // Link the collection to the account's public interface
-    // acct.link<&FlowVideo.Collection{FlowVideo.MyCollectionPrivate}>(/private/Collection, target: /storage/Collection) // Link the collection to the account's private interface
+    acct.save(<- FlowVideo.createEmptyCollection(), to: /storage/Collection) // Save the collection to the account's storage
+    acct.link<&FlowVideo.Collection{FlowVideo.MyCollectionPublic}>(/public/Collection, target: /storage/Collection) // Link the collection to the account's public interface
+    acct.link<&FlowVideo.Collection{FlowVideo.MyCollectionPrivate}>(/private/Collection, target: /storage/Collection) // Link the collection to the account's private interface
 
     let publicReference = getAccount(recipient).getCapability(/public/Collection)
       .borrow<&FlowVideo.Collection{FlowVideo.MyCollectionPublic}>()

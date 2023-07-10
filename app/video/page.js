@@ -243,7 +243,7 @@ function page() {
             tab == 1 &&
             <div className='mt-10 max-w-lg py-10 px-5 shadow-lg rounded-lg'>
               <div className='flex justify-between mb-2 mx-auto'>
-                <h2 className='font-bold'>Contract Address</h2>
+                <h2 className='font-bold'>Owner Address</h2>
                 <h2>{video.owner}</h2>
               </div>
               <div className='flex justify-between mb-2'>
@@ -252,11 +252,11 @@ function page() {
               </div>
               <div className='flex justify-between mb-2'>
                 <h2 className='font-bold'>Last Updated</h2>
-                <h2>6th July, 2023</h2>
+                <h2>10th July, 2023</h2>
               </div>
               <div className='flex justify-between mb-2'>
                 <h2 className='font-bold'>Created on</h2>
-                <h2>7th July, 2023</h2>
+                <h2>10th July, 2023</h2>
               </div>
             </div>
           }
