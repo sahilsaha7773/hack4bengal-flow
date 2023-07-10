@@ -1,5 +1,5 @@
 "use client"
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
   ArrowPathIcon,
@@ -11,9 +11,16 @@ import {
   XMarkIcon,
   MagnifyingGlassCircleIcon,
   HandThumbUpIcon,
-  EyeIcon
+  EyeIcon,
+  UserIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, HandThumbDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link.js'
+// Flow related imports
+import * as fcl from "@onflow/fcl";
+import * as t from "@onflow/types"
+import "../../flow/config.js";
+import CreateUserProfile from '@/flow/cadence/transactions/js/CreateUserProfile.js'
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -28,17 +35,41 @@ function Navbar() {
     { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
     { name: 'Contact sales', href: '#', icon: PhoneIcon },
   ]
+
+  const [user, setUser] = useState({}) // user state for auth
+  const [acc, setAcc] = useState({})
+  const authenticate = async () => {
+    await fcl.authenticate()
+    console.log("Wallet Connected!\nCreating User Profile...")
+  }
+  const logout = async () => {
+    fcl.unauthenticate()
+  }
+
+  useEffect(() => {
+    fcl.currentUser().subscribe(setUser) // set user state on flow auth
+
+  }, [])
+  const getAcc = async () => {
+    const a = await fcl.account(user?.addr)
+    console.log(a);
+    setAcc(a)
+  }
+  useEffect(() => {
+    if (user?.addr)
+      getAcc()
+  }, [user])
   return (
     <div>
       <header className="bg-white">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="/dashboard" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img className="h-8 w-auto"
                 src="https://cryptologos.cc/logos/flow-flow-logo.png"
                 alt="" />
-            </a>
+            </Link>
           </div>
           <div className="flex lg:hidden">
             <button
@@ -108,9 +139,11 @@ function Navbar() {
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
               Marketplace
             </a>
-            <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-              About Us
-            </a>
+            {
+              user.addr &&
+              <Link href="/upload" className="text-sm font-semibold leading-6 text-gray-900">Upload Video</Link>
+            }
+
           </Popover.Group>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <button type="button"
@@ -126,17 +159,37 @@ function Navbar() {
               rounded-lg
               hover:bg-green-400
               hover:text-white
-              hover:border-green-400">
+              hover:border-green-400"
+              onClick={() => {
+                if (user.addr) {
+                  if (confirm("Are you sure you want to log out?")) {
+                    logout()
+                  }
+                }
+                else
+                  authenticate()
+              }}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
               </svg>
               <span className='mx-1'>
-                Connect Wallet
+                {user.addr ? user.addr.slice(0, 6) + '...' + user.addr.slice(-4) : 'Connect Wallet'}
               </span>
             </button>
             {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
               Log in <span aria-hidden="true">&rarr;</span>
             </a> */}
+
+            {user.addr &&
+              <Link href="/profile" className='flex items-center ml-4'>
+                <UserIcon className="h-6 w-6 text-gray-400" aria-hidden="true" />
+                <span className='mx-1 flex items-center'>
+                  {(acc.balance * Math.pow(10, -8)).toString().substring(0, (acc.balance * Math.pow(10, -8)).toString().indexOf('.'))} <img className="h-6 w-auto ml-2"
+                    src="https://cryptologos.cc/logos/flow-flow-logo.png"
+                    alt="" />
+                </span>
+              </Link>
+            }
           </div>
         </nav>
         <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
